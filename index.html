@@ -13,20 +13,25 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* ДОЩ ТЕКСТУ */
+/* ДОЩ СТОВПЧИКІВ */
 .rain {
   position: absolute;
-  top: -50px;
-  color: pink;
-  font-size: 18px;
-  opacity: 0.2;
+  top: -100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 16px;
+  opacity: 0.3;
   animation: fall linear infinite;
-  white-space: nowrap;
+}
+
+.rain span {
+  line-height: 14px;
 }
 
 @keyframes fall {
   to {
-    transform: translateY(110vh);
+    transform: translateY(120vh);
   }
 }
 
@@ -68,28 +73,38 @@ const words = ["Happy", "Birthday", "to", "You"];
 const textEl = document.getElementById("mainText");
 const timerEl = document.getElementById("timer");
 
-/* СТАРТ ЧЕРЕЗ 3 СЕК */
+/* СТАРТ */
 setTimeout(() => {
   startRain();
   startTimer();
 }, 3000);
 
-/* ДОЩ */
-function startRain() {
-  for (let i = 0; i < 80; i++) {
-    let span = document.createElement("div");
-    span.className = "rain";
-    span.innerText = "happy birthday";
+/* ДОЩ БУКВАМИ */
+function createColumn(text) {
+  let div = document.createElement("div");
+  div.className = "rain";
 
-    span.style.left = Math.random() * 100 + "vw";
-    span.style.animationDuration = (3 + Math.random() * 5) + "s";
+  const fullText = "happybirthday";
 
-    /* РІЗНІ ТЕМНІ ВІДТІНКИ РОЖЕВОГО */
-    const shades = ["#ff4d94", "#cc0066", "#99004d", "#b30059"];
-    span.style.color = shades[Math.floor(Math.random() * shades.length)];
-
-    document.body.appendChild(span);
+  for (let char of fullText) {
+    let span = document.createElement("span");
+    span.innerText = char;
+    div.appendChild(span);
   }
+
+  div.style.left = Math.random() * 100 + "vw";
+  div.style.animationDuration = (4 + Math.random() * 4) + "s";
+
+  const shades = ["#ff4d94", "#cc0066", "#99004d", "#b30059"];
+  div.style.color = shades[Math.floor(Math.random() * shades.length)];
+
+  document.body.appendChild(div);
+}
+
+function startRain() {
+  setInterval(() => {
+    createColumn();
+  }, 150);
 }
 
 /* ТАЙМЕР */
