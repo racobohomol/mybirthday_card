@@ -105,7 +105,7 @@ body {
   <div id="mainText"></div>
 </div>
 
-<div id="tapHint">Нажми!</div>
+<div id="tapHint">tap to begin</div>
 
 <script>
 const words = ["Happy", "Birthday", "to", "You"];
@@ -175,7 +175,7 @@ function showWord() {
 }
 
 function showFinal() {
-  textEl.innerHTML = "Happy Birthday<br> Yaryna!";
+  textEl.innerHTML = "Happy Birthday<br>to You";
   textEl.style.opacity = 1;
   setTimeout(showHeart, 1200);
 }
@@ -189,7 +189,7 @@ function showHeart() {
   canvas.style.opacity = 1;
 
   const cx = canvas.width / 2;
-  const cy = canvas.height / 2 + 60;
+  const cy = canvas.height / 2; /* moved up from /2 + 60 so text sits inside heart */
   const scale = Math.min(canvas.width, canvas.height) / 420;
   const colors = ["#ff0066","#e0005e","#ff3399","#cc0055","#ff80bf","#b3004b","#ff006a","#ff4da6"];
 
