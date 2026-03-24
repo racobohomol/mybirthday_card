@@ -1,14 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=
-    , initial-scale=1.0">
-    <title>З Днем Народження!</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(270deg, #ff6ec4, #7873f5);
+  background-size: 400% 400%;
+  animation: bgAnimation 8s ease infinite;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+@keyframes bgAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.text {
+  position: absolute;
+  font-size: 50px;
+  color: white;
+  opacity: 0;
+  transform: scale(0.5);
+  animation: showText 2s ease forwards;
+}
+
+@keyframes showText {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+</style>
 </head>
-<body style="text-align:center; background:pink;">
-    <h1>З Днем Народження!</h1>
-    <p>Бажаю щастя, здоров'я і грошей 💸</p>
-    
+
+<body>
+
+<div id="text" class="text"></div>
+
+<script>
+const words = ["Happy", "Birthday", "to", "You"];
+let index = 0;
+const textEl = document.getElementById("text");
+
+function showNextWord() {
+  if (index >= words.length) return;
+
+  textEl.textContent = words[index];
+  textEl.style.animation = "none";
+  void textEl.offsetWidth; // перезапуск анімації
+  textEl.style.animation = "showText 2s ease forwards";
+
+  index++;
+  setTimeout(showNextWord, 2000);
+}
+
+showNextWord();
+</script>
+
 </body>
 </html>
