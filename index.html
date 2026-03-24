@@ -4,121 +4,145 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Birthday</title>
-
+ 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap');
+ 
 body {
   margin: 0;
   overflow: hidden;
-  background: black;
-  font-family: Arial, sans-serif;
+  background: #0a0005;
+  font-family: 'Playfair Display', Georgia, serif;
 }
-
-/* ДОЩ СТОВПЧИКІВ */
+ 
+/* RAIN COLUMNS */
 .rain {
   position: absolute;
-  top: -100px;
+  top: -180px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 16px;
-  opacity: 0.3;
-  animation: fall linear infinite;
+  font-size: 20px;
+  font-weight: 700;
+  opacity: 0.65;
+  animation: fall linear forwards;
 }
-
+ 
 .rain span {
-  line-height: 14px;
+  line-height: 16px;
 }
-
+ 
 @keyframes fall {
   to {
-    transform: translateY(120vh);
+    transform: translateY(125vh);
   }
 }
-
-/* ЦЕНТР */
+ 
+/* CENTER */
 .center {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-align: center;
+  width: 90vw;
 }
-
-/* ТАЙМЕР */
+ 
+/* TIMER */
 #timer {
-  font-size: 80px;
-  color: #ff4da6;
+  font-size: 110px;
+  font-weight: 900;
+  color: #e0005e;
   opacity: 0;
+  text-shadow:
+    0 0 20px #e0005e,
+    0 0 60px #9b0040;
+  transition: opacity 0.3s;
 }
-
-/* ТЕКСТ */
+ 
+/* TEXT */
 #mainText {
-  font-size: 60px;
-  color: #ff4da6;
+  font-size: 85px;
+  font-weight: 900;
+  color: #e0005e;
   opacity: 0;
   text-align: center;
   transition: opacity 0.5s;
+  text-shadow:
+    0 0 20px #e0005e,
+    0 0 60px #9b0040;
+  line-height: 1.1;
 }
 </style>
 </head>
-
+ 
 <body>
-
+ 
 <div class="center">
   <div id="timer"></div>
   <div id="mainText"></div>
 </div>
-
+ 
 <script>
 const words = ["Happy", "Birthday", "to", "You"];
 const textEl = document.getElementById("mainText");
 const timerEl = document.getElementById("timer");
-
-/* СТАРТ */
+ 
+/* START AFTER 3 SEC */
 setTimeout(() => {
   startRain();
   startTimer();
 }, 3000);
+ 
+/* CREATE COLUMN */
 function createColumn() {
   let div = document.createElement("div");
   div.className = "rain";
-
+ 
   const text = ["h","a","p","p","y","","b","i","r","t","h","d","a","y"];
-
+ 
   text.forEach(char => {
     let span = document.createElement("span");
     span.innerText = char;
-    
+ 
     if (char === "") {
-      span.style.marginBottom = "10px"; // відступ між словами
+      span.style.marginBottom = "12px";
     }
-
+ 
     div.appendChild(span);
   });
-
+ 
   div.style.left = Math.random() * 100 + "vw";
   div.style.animationDuration = (4 + Math.random() * 4) + "s";
-
-  const shades = ["#ff4d94", "#cc0066", "#99004d", "#b30059"];
+ 
+  /* Deep, rich color palette */
+  const shades = ["#e0005e", "#b3004b", "#8c0038", "#cc0055", "#ff0066"];
   div.style.color = shades[Math.floor(Math.random() * shades.length)];
-
+ 
   document.body.appendChild(div);
+ 
+  /* Remove ONLY when animation ends (i.e. reaches bottom of screen) */
+  div.addEventListener("animationend", () => {
+    div.remove();
+  });
 }
-
+ 
+/* START RAIN */
 function startRain() {
   setInterval(() => {
     createColumn();
-  }, 150);
+  }, 120);
 }
-
-/* ТАЙМЕР */
+ 
+/* TIMER */
 function startTimer() {
   let count = 3;
   timerEl.style.opacity = 1;
-
+ 
   let interval = setInterval(() => {
     timerEl.textContent = count;
     count--;
-
+ 
     if (count < 0) {
       clearInterval(interval);
       timerEl.style.opacity = 0;
@@ -126,36 +150,36 @@ function startTimer() {
     }
   }, 1000);
 }
-
-/* СЛОВА */
+ 
+/* SEQUENTIAL WORDS */
 let index = 0;
-
+ 
 function startWords() {
   showWord();
 }
-
+ 
 function showWord() {
   if (index >= words.length) {
     showFinal();
     return;
   }
-
+ 
   textEl.textContent = words[index];
   textEl.style.opacity = 1;
-
+ 
   setTimeout(() => {
     textEl.style.opacity = 0;
     index++;
-    setTimeout(showWord, 500);
-  }, 1500);
+    setTimeout(showWord, 400);
+  }, 1400);
 }
-
-/* ФІНАЛ */
+ 
+/* FINAL */
 function showFinal() {
-  textEl.textContent = "Happy Birthday to You";
+  textEl.innerHTML = "Happy Birthday<br>to You";
   textEl.style.opacity = 1;
 }
 </script>
-
+ 
 </body>
 </html>
